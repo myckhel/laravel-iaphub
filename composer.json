@@ -1,0 +1,46 @@
+{
+    "name": "myckhel/laravel-iaphub",
+    "description": "IAPHUB APIs in laravel",
+    "type": "package",
+    "license": "MIT",
+    "homepage": "https://github.com/myckhel/laravel-iaphub",
+    "keywords": [
+        "laravel", "iaphub", "iaphub php"
+    ],
+    "authors": [
+        {
+            "name": "myckhel",
+            "email": "myckhel1@hotmail.com"
+        }
+    ],
+    "require": {
+      "illuminate/support": "~5|~6|~7|~8",
+      "nesbot/carbon": "^2.36.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Myckhel\\Iaphub\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Myckhel\\Iaphub\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Myckhel\\Iaphub\\IaphubServiceProvider"
+            ],
+            "aliases": {
+                "Iaphub": "Myckhel\\Iaphub\\Facades\\Iaphub"
+            }
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0"
+    }
+}
