@@ -13,22 +13,22 @@ trait Request
     return new IaphubConfig;
   }
 
-  public static function post($endpoint, $params)
+  public static function post($endpoint, $params = [])
   {
     return self::request($endpoint, $params, 'post');
   }
 
-  public static function delete($endpoint, $params)
+  public static function delete($endpoint, $params = [])
   {
     return self::request($endpoint, $params, 'delete');
   }
 
-  public static function put($endpoint, $params)
+  public static function put($endpoint, $params = [])
   {
     return self::request($endpoint, $params, 'put');
   }
 
-  public static function get($endpoint, $params)
+  public static function get($endpoint, $params = [])
   {
     return self::request($endpoint, $params);
   }
@@ -41,18 +41,23 @@ trait Request
   {
     $cm       = self::cm();
     $secret   = $cm->secret;
+    $env      = $cm->env;
 
     $res = Http::withHeaders([
       'Content-Type'  => 'application/json',
-      'Authorization' => $secret
+      'Authorization' => "ApiKey $secret"
     ])
     ->$method(
       $cm->url.$endpoint,
-      $params
+      $params + ['environment' => $env]
     );
 
     if ($res->failed()) {
-      $res->throw();
+      if ($res->status() == 404) {
+        abort(404, $res->body());
+      } else {
+        $res->throw();
+      }
     } else {
       return $res;
     }

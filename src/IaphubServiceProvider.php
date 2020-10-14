@@ -3,6 +3,7 @@
 namespace Myckhel\Iaphub;
 
 use Illuminate\Support\ServiceProvider;
+use Myckhel\Iaphub\Http\Middleware\ValidateIaphubHook;
 
 class IaphubServiceProvider extends ServiceProvider
 {
@@ -41,7 +42,8 @@ class IaphubServiceProvider extends ServiceProvider
       // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'myckhel');
       // $this->loadViewsFrom(__DIR__.'/../resources/views', 'myckhel');
       // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-      // $this->loadRoutesFrom(__DIR__.'/routes.php');
+      $this->loadRoutesFrom(__DIR__.'/routes.php');
+      $this->app['router']->aliasMiddleware('iaphub_hook_token', ValidateIaphubHook::class);
 
       // Publishing is only necessary when using the CLI.
       if ($this->app->runningInConsole()) {
