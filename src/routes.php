@@ -8,7 +8,7 @@ use Myckhel\Iaphub\Http\Controllers\IaphubController;
 $middleware = config('iaphub.route_middleware');
 
 Route::group(['middleware' => $middleware ? explode(',', $middleware) : []], function(){
-  Route::prefix('/api/iaphub')->name('iaphub')->group(function(){
+  Route::prefix('/api/iaphub')->group(function(){
     Route::post('user/{id}',            [IaphubController::class, 'postUser']);
     Route::get('user/{id}',             [IaphubController::class, 'getUser']);
     Route::post('user/{id}/pricing',    [IaphubController::class, 'postUserPricing']);
