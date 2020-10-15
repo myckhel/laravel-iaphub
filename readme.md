@@ -9,37 +9,100 @@
 
 ## Install
 Via Composer
-`$ composer require myckhel/laravel-iaphub`
+```bash
+composer require myckhel/laravel-iaphub
+```
 
 ## Setup
 The package will automatically register a service provider.
 
 You need to publish the configuration file:
 
-```php artisan vendor:publish --provider="Myckhel\Iaphub\IaphubServiceProvider"```
+```bash
+php artisan vendor:publish --provider="Myckhel\Iaphub\IaphubServiceProvider"
+```
 
-This is the default content of the config file ```Iaphub.php```:
+This is the default content of the config file ```iaphub.php```:
 
-```<?php
-
-return [
-
-];
+```php
+<?php
+  return [
+    "api_key"          => env("IAPHUB_API_KEY"),
+    "app_id"           => env("IAPHUB_APP_ID"),
+    "env"              => env("IAPHUB_APP_ENV"),
+    "hook_token"       => env("IAPHUB_HOOK_TOKEN"),
+    // this middleware will be used for IAPHUB routes
+    "route_middleware" => 'iaphub_disabled', // comma separated values e.g 'auth:api,auth:web'
+  ];
 ```
 Update Your Projects `.env` with:
 ```
-
+IAPHUB_API_KEY=EaYYAcOugVK9BccHphIStamqLQkh2Xi
+IAPHUB_APP_ID=5f8823fe9856f60e35712a03
+IAPHUB_HOOK_TOKEN=cLFh3Zgg2cWQDAIiZCUzqmAquDvHWr
+IAPHUB_APP_ENV=development
 ```
 Run the database migration
-`php artisan migrate`
+```bash
+php artisan migrate
+```
 
 ## Available Api's
-```
+```php
+<?php
 use Iaphub;
 
+Iaphub::getUser($userId, $params);
+Iaphub::postUser($userId, $params);
+Iaphub::postUserPricing($userId, $params);
+Iaphub::postUserReceipt($userId, $params);
+Iaphub::postUserPurchases($userId, $params);
+Iaphub::getPurchase($purchaseId, $params);
+Iaphub::getReceipt($receiptId, $params);
 ```
 
 ## API Usage Example
+```php
+<?php
+
+namespace Myckhel\Iaphub\Http\Controllers;
+
+use Illuminate\Routing\Controller;
+use Myckhel\Iaphub\Http\Requests\IaphubRequest;
+use Illuminate\Http\Request;
+use Iaphub;
+
+class IaphubController extends Controller
+{
+  public function getUser(IaphubRequest $request, $id){
+    return Iaphub::getUser($id, $request->all());
+  }
+}
+```
+
+## Middleware
+IAPHUB provided 2 middlewares
+### `iaphub_hook_token`
+For authenticating iaphub hook request
+#### Example:
+```php
+<?php
+Route::any('iaphub/hooks',  [SubscriptionController::class, 'hooks'])->middleware('iaphub_hook_token');
+
+```
+### `iaphub_disabled`
+For disabling route request
+returns 403 response
+#### Example:
+```php
+<?php
+Route::any('iaphub/hooks',  [SubscriptionController::class, 'hooks'])->middleware('iaphub_disabled');
+/* returns {
+    "message": "This Endpoint Is Disabled \n enable it by replacing the 'iaphub_disabled' middleware from your config",
+  }
+*/
+
+```
 
 
 ## Todos
