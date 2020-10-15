@@ -38,8 +38,8 @@ class IaphubController extends Controller
   }
   public function hooks(Request $request){
     $request->validate([
-      'type'    => 'required|in:purchase,refund,user_id_update,subscription_renewal,subscription_renewal_retry,subscription_grace_period_expire,subscription_product_change,subscription_replace,subscription_cancel,subscription_uncancel,subscription_expire',
-      'version' => 'required',
+//       'type'    => 'required|in:purchase,refund,user_id_update,subscription_renewal,subscription_renewal_retry,subscription_grace_period_expire,subscription_product_change,subscription_replace,subscription_cancel,subscription_uncancel,subscription_expire',
+//       'version' => 'required',
     ]);
     $type     = $request->type;
     $version  = $request->version;
