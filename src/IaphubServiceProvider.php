@@ -4,6 +4,7 @@ namespace Myckhel\Iaphub;
 
 use Illuminate\Support\ServiceProvider;
 use Myckhel\Iaphub\Http\Middleware\ValidateIaphubHook;
+use Myckhel\Iaphub\Http\Middleware\DisabledRoute;
 
 class IaphubServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,7 @@ class IaphubServiceProvider extends ServiceProvider
       // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
       $this->loadRoutesFrom(__DIR__.'/routes.php');
       $this->app['router']->aliasMiddleware('iaphub_hook_token', ValidateIaphubHook::class);
+      $this->app['router']->aliasMiddleware('iaphub_disabled',   DisabledRoute::class);
 
       // Publishing is only necessary when using the CLI.
       if ($this->app->runningInConsole()) {
