@@ -37,9 +37,9 @@ This is the default content of the config file ```iaphub.php```:
 ```
 Update Your Projects `.env` with:
 ```
-IAPHUB_API_KEY=EaYYAcOugVK9BccHphIStamqLQkh2Xi
-IAPHUB_APP_ID=5f8823fe9856f60e35712a03
-IAPHUB_HOOK_TOKEN=cLFh3Zgg2cWQDAIiZCUzqmAquDvHWr
+IAPHUB_API_KEY=XXXXXXXXXXXXXXXXX
+IAPHUB_APP_ID=XXXXXXXXXXXXXXXXX
+IAPHUB_HOOK_TOKEN=XXXXXXXXXXXXXXXXX
 IAPHUB_APP_ENV=development
 ```
 Run the database migration
