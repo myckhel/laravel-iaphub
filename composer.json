@@ -40,7 +40,5 @@
             }
         }
     },
-    "require-dev": {
-        "orchestra/testbench": "^5.0"
-    }
+    "require-dev": {}
 }
